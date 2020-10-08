@@ -16,7 +16,9 @@
         }
     ],
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "ext-json": "*",
+        "ext-mongodb": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0"
@@ -32,9 +34,8 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
-
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage"
     },
     "config": {
         "sort-packages": true
