@@ -149,7 +149,7 @@ class MongoDb implements DatabaseInterface
     {
         $command = new Command([
             'delete' => $collectionName,
-            'deletes' => $payload
+            'deletes' => [$payload]
         ]);
 
         return $this->connection->executeCommand($this->database, $command)->toArray();

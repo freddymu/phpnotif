@@ -5,7 +5,7 @@ return [
         'mongodb' => [
             'host' => '172.31.0.10',
             'port' => 27017,
-            'database' => 'phpnotif',
+            'database' => 'phpnotif_testing',
             'username' => 'mongo-root',
             'password' => 'MolaD1nDevr00t!n3w',
             'options' => [
