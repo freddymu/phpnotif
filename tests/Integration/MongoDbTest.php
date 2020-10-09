@@ -67,7 +67,40 @@ class MongoDbTest extends TestCase
      */
     public function add_and_edit_document()
     {
-        $this->markTestSkipped();
+        // Given
+        $mongoDb = new MongoDb();
+
+        $entity = new PhpNotifEntity();
+        $entity->id = getmyuid();
+        $entity->title = 'The title';
+        $entity->content_long = 'This is the content long';
+        $entity->created_at = (new UTCDateTime(time() * 1000));
+        $entity->created_at_unixtimestamp = time();
+        $entity->user_id = 17;
+
+        $data = [$entity->toArray()];
+
+        $collectionName = Config::get('connection.mongodb.default_collection_name');
+
+        // When
+        $mongoDb->openConnection();
+
+        $mongoDb->create($collectionName, $data);
+
+        $entity->title = 'The Title [EDITED]';
+        $updatedData = $entity->toArray();
+        unset($updatedData->id);
+
+        $result = $mongoDb->update($collectionName, [
+            'q' => ['id' => $entity->id],
+            'u' => ['$set' => $updatedData]
+        ]);
+        
+        $mongoDb->closeConnection();
+
+        // Then
+        self::assertNotNull($result);
+        self::assertEquals(1, $result[0]->nModified);
     }
 
     /**

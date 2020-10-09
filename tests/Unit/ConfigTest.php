@@ -2,10 +2,10 @@
 
 namespace Freddymu\Phpnotif\Tests\Unit;
 
-use Freddymu\Phpnotif\ConfigHelper;
+use Freddymu\Phpnotif\Helper\Config;
 use PHPUnit\Framework\TestCase;
 
-class ConfigHelperTest extends TestCase
+class ConfigTest extends TestCase
 {
     /**
      * @test
@@ -13,7 +13,7 @@ class ConfigHelperTest extends TestCase
     public function read_config_file()
     {
         // Given
-        $configContent = ConfigHelper::get('connection');
+        $configContent = Config::get('connection');
 
         // When
 
@@ -27,7 +27,7 @@ class ConfigHelperTest extends TestCase
     public function read_a_sub_key_from_config_file()
     {
         // Given
-        $configContent = ConfigHelper::get('connection.mongodb.username');
+        $configContent = Config::get('connection.mongodb.username');
 
         // When
 

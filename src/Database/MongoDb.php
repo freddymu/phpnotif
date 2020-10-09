@@ -132,7 +132,7 @@ class MongoDb implements DatabaseInterface
     {
         $command = new Command([
             'update' => $collectionName,
-            'updates' => $payload
+            'updates' => [$payload]
         ]);
 
         return $this->connection->executeCommand($this->database, $command)->toArray();
