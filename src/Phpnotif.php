@@ -54,4 +54,18 @@ class Phpnotif
 
         return $response;
     }
+
+    public function read(): GenericResponseEntity
+    {
+        $response = new GenericResponseEntity();
+
+        return $response;
+    }
+
+    public function getByUserId() : GenericResponseEntity
+    {
+        $response = new GenericResponseEntity();
+
+        return $response;
+    }
 }

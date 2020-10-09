@@ -22,15 +22,15 @@ class PhpNotifTest extends TestCase
         $entity->content_long = 'This is the content long';
         $entity->created_at = (new UTCDateTime(time() * 1000));
         $entity->created_at_unixtimestamp = time();
-        $entity->user_id = null;
+        $entity->user_id = 12;
 
         // When
         $result = $phpNotif->save($entity);
 
         // Then
         self::assertTrue($result->success);
-        self::assertNotNull($result->data, $result->message);
-        self::assertNotEmpty($result->data, $result->message);
+        self::assertNotNull($result->data, $result->message ?? '');
+        self::assertNotEmpty($result->data, $result->message ?? '');
     }
 
     /**

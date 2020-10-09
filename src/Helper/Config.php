@@ -42,13 +42,13 @@ class Config
      */
     private static function getConfigFileContent(): array
     {
-        $laravelConfigStructure = dirname(__DIR__) . '/config/phpnotif.php';
+        $laravelConfigStructure = dirname(__DIR__) . '/../../../config/phpnotif.php';
 
         if (file_exists($laravelConfigStructure)) {
             return include $laravelConfigStructure;
         }
 
-        $defaultConfigFile = dirname(__DIR__) . '/src/config/phpnotif.php';
+        $defaultConfigFile = dirname(__DIR__) . '/../config/phpnotif.php';
 
         if (file_exists($defaultConfigFile)) {
             return include $defaultConfigFile;

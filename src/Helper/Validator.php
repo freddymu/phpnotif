@@ -21,7 +21,7 @@ class Validator
     {
         // This bunch of object creation is showing you the truth when missing a dependency injection :-)
         $loader = new ArrayLoader();
-        $loader->addMessages('en', 'validation', include dirname(__DIR__) . '/resources/lang/en/validation.php');
+        $loader->addMessages('en', 'validation', include dirname(__DIR__) . '/../resources/lang/en/validation.php');
         $translator = new Translator($loader, 'en');
 
         return new \Illuminate\Validation\Validator($translator, $data, $rules, $messages);
