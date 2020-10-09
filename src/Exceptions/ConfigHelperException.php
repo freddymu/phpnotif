@@ -1,6 +1,6 @@
 <?php
 
-namespace Freddymu\Phpnotif;
+namespace Freddymu\Phpnotif\Exceptions;
 
 class ConfigHelperException extends \Exception
 {

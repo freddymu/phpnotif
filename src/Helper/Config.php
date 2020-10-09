@@ -1,15 +1,16 @@
 <?php
 
 
-namespace Freddymu\Phpnotif;
+namespace Freddymu\Phpnotif\Helper;
 
 use Exception;
+use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
 
 /**
  * Class ConfigHelper
  * @package Freddymu\Phpnotif
  */
-class ConfigHelper
+class Config
 {
     /**
      * @param string $name

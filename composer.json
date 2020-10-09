@@ -18,7 +18,8 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
-        "ext-mongodb": "*"
+        "ext-mongodb": "*",
+        "illuminate/validation": "^8.9"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0"

@@ -3,6 +3,7 @@
 namespace Freddymu\Phpnotif\Database;
 
 use Freddymu\Phpnotif\ConfigHelper;
+use Freddymu\Phpnotif\Helper\Config;
 use MongoDB\Driver\Command;
 use MongoDB\Driver\Exception\Exception;
 use MongoDB\Driver\Manager;
@@ -43,18 +44,19 @@ class MongoDb implements DatabaseInterface
      */
     private $adminDatabase;
 
+    protected $collectionName;
+
     /**
      * MongoDb constructor.
-     * @throws \Freddymu\Phpnotif\ConfigHelperException
      */
     public function __construct()
     {
-        $this->username = ConfigHelper::get('connection.mongodb.username');
-        $this->password = ConfigHelper::get('connection.mongodb.password');
-        $this->host = ConfigHelper::get('connection.mongodb.host');
-        $this->port = ConfigHelper::get('connection.mongodb.port');
-        $this->database = ConfigHelper::get('connection.mongodb.database');
-        $this->adminDatabase = ConfigHelper::get('connection.mongodb.options.database');
+        $this->username = Config::get('connection.mongodb.username');
+        $this->password = Config::get('connection.mongodb.password');
+        $this->host = Config::get('connection.mongodb.host');
+        $this->port = Config::get('connection.mongodb.port');
+        $this->database = Config::get('connection.mongodb.database');
+        $this->adminDatabase = Config::get('connection.mongodb.options.database');
     }
 
     /**

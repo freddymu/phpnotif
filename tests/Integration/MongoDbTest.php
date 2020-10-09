@@ -2,9 +2,9 @@
 
 namespace Freddymu\Phpnotif\Tests\Integration;
 
-use Freddymu\Phpnotif\ConfigHelper;
 use Freddymu\Phpnotif\Database\MongoDb;
 use Freddymu\Phpnotif\Entities\PhpNotifEntity;
+use Freddymu\Phpnotif\Helper\Config;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
@@ -50,7 +50,7 @@ class MongoDbTest extends TestCase
 
         $data = [$entity->toArray()];
 
-        $collectionName = ConfigHelper::get('connection.mongodb.default_collection_name');
+        $collectionName = Config::get('connection.mongodb.default_collection_name');
 
         // When
         $mongoDb->openConnection();
