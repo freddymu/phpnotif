@@ -55,14 +55,14 @@ class Phpnotif
         return $response;
     }
 
-    public function read(): GenericResponseEntity
+    public function setMessageAsRead(): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 
         return $response;
     }
 
-    public function getByUserId() : GenericResponseEntity
+    public function getInboxByUserId(): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 

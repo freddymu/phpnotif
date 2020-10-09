@@ -1,6 +1,6 @@
 {
     "name": "freddymu/phpnotif",
-    "description": "A PHP Package to handle notification inbox using MongoDB. Supporting queuing using Redis or standalone queuing using memory.",
+    "description": "A PHP Package to handle notification inbox using MongoDB native driver.",
     "keywords": [
         "freddymu",
         "phpnotif"
