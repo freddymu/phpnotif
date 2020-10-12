@@ -2,14 +2,12 @@
 
 namespace Freddymu\Phpnotif\Tests\Integration;
 
-use Faker\Factory;
-use Freddymu\Phpnotif\Entities\PhpNotifEntity;
 use Freddymu\Phpnotif\Helper\Test;
-use Freddymu\Phpnotif\Phpnotif;
+use Freddymu\Phpnotif\PhpNotif;
+use Freddymu\Phpnotif\Tests\BaseTestCase;
 use MongoDB\Driver\Exception\Exception;
-use PHPUnit\Framework\TestCase;
 
-class PhpNotifTest extends TestCase
+class PhpNotifTest extends BaseTestCase
 {
     /**
      * @test
@@ -18,7 +16,7 @@ class PhpNotifTest extends TestCase
     public function send_notification_to_inbox()
     {
         // Given
-        $phpNotif = new Phpnotif();
+        $phpNotif = new PhpNotif();
         $entity = Test::createEntity();
 
         // When
@@ -37,7 +35,7 @@ class PhpNotifTest extends TestCase
     public function get_inbox_by_user_id()
     {
         // Given
-        $phpNotif = new Phpnotif();
+        $phpNotif = new PhpNotif();
         $entity = Test::createEntity();
 
         // When
@@ -56,7 +54,7 @@ class PhpNotifTest extends TestCase
     public function set_message_as_read()
     {
         // Given
-        $phpNotif = new Phpnotif();
+        $phpNotif = new PhpNotif();
         $entity = Test::createEntity();
 
         // When

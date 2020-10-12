@@ -6,11 +6,11 @@ use Freddymu\Phpnotif\Database\MongoDb;
 use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
 use Freddymu\Phpnotif\Helper\Config;
 use Freddymu\Phpnotif\Helper\Test;
+use Freddymu\Phpnotif\Tests\BaseTestCase;
 use MongoDB\Driver\Exception\Exception;
 use MongoDB\Driver\Manager;
-use PHPUnit\Framework\TestCase;
 
-class MongoDbTest extends TestCase
+class MongoDbTest extends BaseTestCase
 {
     /**
      * @test

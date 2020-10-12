@@ -3,9 +3,9 @@
 namespace Freddymu\Phpnotif\Tests\Unit;
 
 use Freddymu\Phpnotif\Helper\Config;
-use PHPUnit\Framework\TestCase;
+use Freddymu\Phpnotif\Tests\BaseTestCase;
 
-class ConfigTest extends TestCase
+class ConfigTest extends BaseTestCase
 {
     /**
      * @test

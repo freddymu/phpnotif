@@ -9,17 +9,17 @@ use Freddymu\Phpnotif\Models\PhpNotifModel;
 use MongoDB\Driver\Exception\Exception;
 
 /**
- * Class Phpnotif
+ * Class PhpNotif
  * @package Freddymu\Phpnotif
  */
-class Phpnotif
+class PhpNotif
 {
     /**
      * @param PhpNotifEntity $entity
      * @return GenericResponseEntity
      * @throws Exception
      */
-    public function save(PhpNotifEntity $entity): GenericResponseEntity
+    final public function save(PhpNotifEntity $entity): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 
@@ -55,20 +55,33 @@ class Phpnotif
         return $response;
     }
 
-    public function setMessageAsRead(int $userId, $messageId): GenericResponseEntity
+    /**
+     * @param int $userId
+     * @param $messageId
+     * @return GenericResponseEntity
+     * @throws Exception
+     */
+    final public function setMessageAsRead(int $userId, $messageId): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 
         $model = new PhpNotifModel();
         $result = $model->setMessageAsRead($userId, $messageId);
 
-        $response->success = !empty($result);
+        $response->success = (bool)($result->nModified ?? 0);
         $response->data = $result;
 
         return $response;
     }
 
-    public function getInboxByUserId(int $userId, int $page = 1): GenericResponseEntity
+    /**
+     * @param int $userId
+     * @param int $page
+     * @return GenericResponseEntity
+     * @throws Exception
+     * @throws Exceptions\ConfigHelperException
+     */
+    final public function getInboxByUserId(int $userId, int $page = 1): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 

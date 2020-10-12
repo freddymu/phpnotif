@@ -3,11 +3,11 @@
 return [
     'connection' => [
         'mongodb' => [
-            'host' => '172.31.0.10',
-            'port' => 27017,
-            'database' => 'phpnotif_testing',
-            'username' => 'mongo-root',
-            'password' => 'MolaD1nDevr00t!n3w',
+            'host' => env('MONGO_HOST'),
+            'port' => env('MONGO_PORT'),
+            'database' => env('MONGO_DATABASE'),
+            'username' => env('MONGO_USERNAME'),
+            'password' => env('MONGO_PASSWORD'),
             'options' => [
                 'database' => 'admin' // sets the authentication database required by mongo 3
             ],

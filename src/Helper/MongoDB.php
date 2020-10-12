@@ -4,10 +4,19 @@
 namespace Freddymu\Phpnotif\Helper;
 
 
+use MongoDB\BSON\UTCDateTime;
+
+/**
+ * Class MongoDB
+ * @package Freddymu\Phpnotif\Helper
+ */
 class MongoDB
 {
+    /**
+     * @return UTCDateTime
+     */
     public static function getUtcDate()
     {
-        return new \MongoDB\BSON\UTCDateTime(time() * 1000);
+        return new UTCDateTime(time() * 1000);
     }
 }
