@@ -79,7 +79,7 @@ class PhpNotif
      * @param int $page
      * @return GenericResponseEntity
      * @throws Exception
-     * @throws Exceptions\ConfigHelperException
+     * @throws Exceptions\ConfigException
      */
     final public function getInboxByUserId(int $userId, int $page = 1): GenericResponseEntity
     {

@@ -4,7 +4,7 @@
 namespace Freddymu\Phpnotif\Helper;
 
 use Exception;
-use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
+use Freddymu\Phpnotif\Exceptions\ConfigException;
 
 /**
  * Class ConfigHelper
@@ -15,7 +15,7 @@ class Config
     /**
      * @param string $name
      * @return mixed
-     * @throws ConfigHelperException
+     * @throws ConfigException
      */
     public static function get(string $name)
     {
@@ -38,7 +38,7 @@ class Config
 
     /**
      * @return array
-     * @throws ConfigHelperException
+     * @throws ConfigException
      */
     private static function getConfigFileContent(): array
     {
@@ -54,6 +54,6 @@ class Config
             return include $defaultConfigFile;
         }
 
-        throw new ConfigHelperException('Cannot found phpnotif.php configuration file.');
+        throw new ConfigException('Cannot found phpnotif.php configuration file.');
     }
 }

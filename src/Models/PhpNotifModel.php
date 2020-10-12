@@ -4,7 +4,7 @@
 namespace Freddymu\Phpnotif\Models;
 
 use Freddymu\Phpnotif\Database\MongoDb;
-use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
+use Freddymu\Phpnotif\Exceptions\ConfigException;
 use Freddymu\Phpnotif\Helper\Config;
 use MongoDB\Driver\Exception\Exception;
 
@@ -43,7 +43,7 @@ class PhpNotifModel extends MongoDb
      * @param int $page
      * @return array
      * @throws Exception
-     * @throws ConfigHelperException
+     * @throws ConfigException
      */
     public function getInboxByUserId(int $userId, int $page = 1)
     {

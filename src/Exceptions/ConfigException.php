@@ -2,7 +2,7 @@
 
 namespace Freddymu\Phpnotif\Exceptions;
 
-class ConfigHelperException extends \Exception
+class ConfigException extends \Exception
 {
 
 }

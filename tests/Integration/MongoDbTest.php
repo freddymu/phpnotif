@@ -3,7 +3,7 @@
 namespace Freddymu\Phpnotif\Tests\Integration;
 
 use Freddymu\Phpnotif\Database\MongoDb;
-use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
+use Freddymu\Phpnotif\Exceptions\ConfigException;
 use Freddymu\Phpnotif\Helper\Config;
 use Freddymu\Phpnotif\Helper\Test;
 use Freddymu\Phpnotif\Tests\BaseTestCase;
@@ -35,7 +35,7 @@ class MongoDbTest extends BaseTestCase
 
     /**
      * @test
-     * @throws ConfigHelperException
+     * @throws ConfigException
      * @throws Exception
      */
     public function add_document()
@@ -59,7 +59,7 @@ class MongoDbTest extends BaseTestCase
 
     /**
      * @test
-     * @throws ConfigHelperException
+     * @throws ConfigException
      * @throws Exception
      */
     public function add_and_read_document()
@@ -86,7 +86,7 @@ class MongoDbTest extends BaseTestCase
 
     /**
      * @test
-     * @throws Exception|ConfigHelperException
+     * @throws Exception|ConfigException
      */
     public function add_and_edit_document()
     {
@@ -120,7 +120,7 @@ class MongoDbTest extends BaseTestCase
 
     /**
      * @test
-     * @throws Exception|ConfigHelperException
+     * @throws Exception|ConfigException
      */
     public function add_and_delete_document()
     {
