@@ -2,11 +2,11 @@
 
 namespace Freddymu\Phpnotif\Database;
 
-use Freddymu\Phpnotif\ConfigHelper;
 use Freddymu\Phpnotif\Helper\Config;
 use MongoDB\Driver\Command;
 use MongoDB\Driver\Exception\Exception;
 use MongoDB\Driver\Manager;
+use MongoDB\Driver\Query;
 
 /**
  * Class MongoDb
@@ -44,6 +44,9 @@ class MongoDb implements DatabaseInterface
      */
     private $adminDatabase;
 
+    /**
+     * @var
+     */
     protected $collectionName;
 
     /**
@@ -104,7 +107,10 @@ class MongoDb implements DatabaseInterface
             'documents' => $documents
         ]);
 
-        return $this->connection->executeCommand($this->database, $command)->toArray();
+        return $this
+            ->connection
+            ->executeCommand($this->database, $command)
+            ->toArray();
     }
 
     /**
@@ -116,9 +122,14 @@ class MongoDb implements DatabaseInterface
      */
     public function read(string $collectionName, array $payload)
     {
-        $command = new Command(array_merge(['find' => $collectionName], $payload));
+        $query = new Query(
+            $payload['filter'],
+            $payload['options'] ?? []
+        );
 
-        return $this->connection->executeReadCommand($this->database, $command)->toArray();
+        return $this->connection
+            ->executeQuery("{$this->database}.{$collectionName}", $query)
+            ->toArray();
     }
 
     /**
@@ -135,7 +146,10 @@ class MongoDb implements DatabaseInterface
             'updates' => [$payload]
         ]);
 
-        return $this->connection->executeCommand($this->database, $command)->toArray();
+        return $this
+            ->connection
+            ->executeCommand($this->database, $command)
+            ->toArray();
     }
 
     /**
@@ -152,6 +166,45 @@ class MongoDb implements DatabaseInterface
             'deletes' => [$payload]
         ]);
 
-        return $this->connection->executeCommand($this->database, $command)->toArray();
+        return $this
+            ->connection
+            ->executeCommand($this->database, $command)
+            ->toArray();
+    }
+
+    /**
+     * @param string $collectionName
+     * @param array $payload
+     * @return array
+     * @throws Exception
+     */
+    public function count(string $collectionName, array $payload)
+    {
+        $pipeline = [
+            [
+                '$match' => (object)$payload
+            ],
+            [
+                '$group' => [
+                    '_id' => 1,
+                    'n' => [
+                        '$sum' => 1
+                    ]
+                ]
+            ]
+        ];
+
+        $params = [
+            'aggregate' => $collectionName,
+            'pipeline' => $pipeline,
+            'cursor' => new \stdClass()
+        ];
+
+        $command = new Command($params);
+
+        return $this
+            ->connection
+            ->executeReadCommand($this->database, $command)
+            ->toArray();
     }
 }

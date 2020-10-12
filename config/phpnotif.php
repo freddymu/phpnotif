@@ -13,5 +13,8 @@ return [
             ],
             'default_collection_name' => 'user_inboxes'
         ]
+    ],
+    'pagination' => [
+        'per_page' => 10
     ]
 ];

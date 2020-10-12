@@ -20,7 +20,7 @@ class PhpNotifTest extends TestCase
         // Given
         $phpNotif = new Phpnotif();
         $entity = new PhpNotifEntity();
-        $entity->id = $faker->uuid;
+        $entity->id = $faker->randomNumber();
         $entity->title = $faker->text(50);
         $entity->content_long = $faker->realText();
         $entity->created_at = (new UTCDateTime(time() * 1000));
@@ -42,13 +42,25 @@ class PhpNotifTest extends TestCase
     public function get_inbox_by_user_id()
     {
         // Given
-        $userId = 0;
+        $faker = Factory::create();
+
+        // Given
+        $phpNotif = new Phpnotif();
+        $entity = new PhpNotifEntity();
+        $entity->id = $faker->randomNumber();
+        $entity->title = $faker->text(50);
+        $entity->content_long = $faker->realText();
+        $entity->created_at = (new UTCDateTime(time() * 1000));
+        $entity->created_at_unixtimestamp = time();
+        $entity->user_id = $faker->randomNumber();
 
         // When
-        // Get inbox
+        $phpNotif->save($entity);
+        $result = $phpNotif->getInboxByUserId($entity->user_id);
 
         // Then
-        // Check the inbox
+        self::assertTrue($result->success);
+        self::assertGreaterThanOrEqual(1, $result->data['total_data']);
     }
 
     /**
@@ -62,5 +74,5 @@ class PhpNotifTest extends TestCase
 
         // Then
     }
-    
+
 }

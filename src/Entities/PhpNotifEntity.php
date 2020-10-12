@@ -9,12 +9,12 @@ namespace Freddymu\Phpnotif\Entities;
 class PhpNotifEntity
 {
     /**
-     * @var
+     * @var int
      */
     public $id;
 
     /**
-     * @var
+     * @var string
      */
     public $title;
 

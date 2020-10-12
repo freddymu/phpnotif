@@ -62,9 +62,16 @@ class Phpnotif
         return $response;
     }
 
-    public function getInboxByUserId(): GenericResponseEntity
+    public function getInboxByUserId(int $userId, int $page = 1): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
+
+        $model = new PhpNotifModel();
+        $result = $model->getInboxByUserId($userId, $page);
+
+        $response->success = !empty($result);
+        $response->message = 'Found ' . $result['total_data'] . ' data(s).';
+        $response->data = $result;
 
         return $response;
     }

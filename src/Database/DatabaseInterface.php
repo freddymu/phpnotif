@@ -50,4 +50,11 @@ interface DatabaseInterface
      * @return mixed
      */
     public function delete(string $referenceName, array $payload);
+
+    /**
+     * @param string $referenceName
+     * @param array $payload
+     * @return mixed
+     */
+    public function count(string $referenceName, array $payload);
 }

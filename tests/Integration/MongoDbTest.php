@@ -5,8 +5,10 @@ namespace Freddymu\Phpnotif\Tests\Integration;
 use Faker\Factory;
 use Freddymu\Phpnotif\Database\MongoDb;
 use Freddymu\Phpnotif\Entities\PhpNotifEntity;
+use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
 use Freddymu\Phpnotif\Helper\Config;
 use MongoDB\BSON\UTCDateTime;
+use MongoDB\Driver\Exception\Exception;
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
 
@@ -38,18 +40,10 @@ class MongoDbTest extends TestCase
      */
     public function add_document()
     {
-        $faker = Factory::create();
-
         // Given
         $mongoDb = new MongoDb();
 
-        $entity = new PhpNotifEntity();
-        $entity->id = $faker->uuid;
-        $entity->title = $faker->text(50);
-        $entity->content_long = $faker->realText();
-        $entity->created_at = (new UTCDateTime(time() * 1000));
-        $entity->created_at_unixtimestamp = time();
-        $entity->user_id = $faker->randomNumber();
+        $entity = $this->createEntity();
 
         $data = [$entity->toArray()];
 
@@ -67,21 +61,42 @@ class MongoDbTest extends TestCase
 
     /**
      * @test
+     * @throws ConfigHelperException
+     * @throws Exception
      */
-    public function add_and_edit_document()
+    public function add_and_read_document()
     {
-        $faker = Factory::create();
-
         // Given
         $mongoDb = new MongoDb();
 
-        $entity = new PhpNotifEntity();
-        $entity->id = $faker->uuid;
-        $entity->title = $faker->text(50);
-        $entity->content_long = $faker->realText();
-        $entity->created_at = (new UTCDateTime(time() * 1000));
-        $entity->created_at_unixtimestamp = time();
-        $entity->user_id = $faker->randomNumber();
+        $entity = $this->createEntity();
+
+        $data = [$entity->toArray()];
+
+        $collectionName = Config::get('connection.mongodb.default_collection_name');
+
+        // When
+        $mongoDb->openConnection();
+
+        $mongoDb->create($collectionName, $data);
+        $result = $mongoDb->read($collectionName, ['filter' => ['user_id' => $entity->user_id]]);
+
+        $mongoDb->closeConnection();
+
+        // Then
+        self::assertNotNull($result);
+        self::assertEquals($entity->user_id, $result[0]->user_id);
+    }
+
+    /**
+     * @test
+     */
+    public function add_and_edit_document()
+    {
+        // Given
+        $mongoDb = new MongoDb();
+
+        $entity = $this->createEntity();
 
         $data = [$entity->toArray()];
 
@@ -113,18 +128,10 @@ class MongoDbTest extends TestCase
      */
     public function add_and_delete_document()
     {
-        $faker = Factory::create();
-
         // Given
         $mongoDb = new MongoDb();
 
-        $entity = new PhpNotifEntity();
-        $entity->id = $faker->uuid;
-        $entity->title = $faker->text(50);
-        $entity->content_long = $faker->realText();
-        $entity->created_at = (new UTCDateTime(time() * 1000));
-        $entity->created_at_unixtimestamp = time();
-        $entity->user_id = $faker->randomNumber();
+        $entity = $this->createEntity();
 
         $collectionName = Config::get('connection.mongodb.default_collection_name');
 
@@ -140,5 +147,22 @@ class MongoDbTest extends TestCase
         // Then
         self::assertNotNull($result);
         self::assertEquals(1, $result[0]->n);
+    }
+
+    /**
+     * @return PhpNotifEntity
+     */
+    private function createEntity(): PhpNotifEntity
+    {
+        $faker = Factory::create();
+
+        $entity = new PhpNotifEntity();
+        $entity->id = $faker->randomNumber();
+        $entity->title = $faker->text(50);
+        $entity->content_long = $faker->realText();
+        $entity->created_at = (new UTCDateTime(time() * 1000));
+        $entity->created_at_unixtimestamp = time();
+        $entity->user_id = $faker->randomNumber();
+        return $entity;
     }
 }
