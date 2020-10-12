@@ -4,6 +4,7 @@
 namespace Freddymu\Phpnotif\Models;
 
 use Freddymu\Phpnotif\Database\MongoDb;
+use Freddymu\Phpnotif\Exceptions\ConfigHelperException;
 use Freddymu\Phpnotif\Helper\Config;
 use MongoDB\Driver\Exception\Exception;
 
@@ -37,6 +38,13 @@ class PhpNotifModel extends MongoDb
         return $this->create($this->collectionName, $payload);
     }
 
+    /**
+     * @param int $userId
+     * @param int $page
+     * @return array
+     * @throws Exception
+     * @throws ConfigHelperException
+     */
     public function getInboxByUserId(int $userId, int $page = 1)
     {
         $defaultPerPage = (int)Config::get('pagination.per_page');
@@ -62,10 +70,33 @@ class PhpNotifModel extends MongoDb
     }
 
     /**
+     * @param int $userId
+     * @param $messageId
+     * @return mixed
+     * @throws Exception
+     */
+    public function setMessageAsRead(int $userId, $messageId)
+    {
+        $set = [
+            'is_read' => 1,
+            'read_at' => \Freddymu\Phpnotif\Helper\MongoDB::getUtcDate()
+        ];
+
+        $result = $this->update($this->collectionName, [
+            'q' => ['id' => $messageId, 'user_id' => $userId],
+            'u' => ['$set' => $set]
+        ]);
+
+        return $result[0];
+    }
+
+    /**
      * Close connection if applicable
      */
     public function __destruct()
     {
-        //$this->closeConnection();
+        $this->closeConnection();
     }
+
+
 }

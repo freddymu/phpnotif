@@ -55,9 +55,15 @@ class Phpnotif
         return $response;
     }
 
-    public function setMessageAsRead(): GenericResponseEntity
+    public function setMessageAsRead(int $userId, $messageId): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
+
+        $model = new PhpNotifModel();
+        $result = $model->setMessageAsRead($userId, $messageId);
+
+        $response->success = !empty($result);
+        $response->data = $result;
 
         return $response;
     }

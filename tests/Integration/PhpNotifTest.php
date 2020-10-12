@@ -4,28 +4,22 @@ namespace Freddymu\Phpnotif\Tests\Integration;
 
 use Faker\Factory;
 use Freddymu\Phpnotif\Entities\PhpNotifEntity;
+use Freddymu\Phpnotif\Helper\Test;
 use Freddymu\Phpnotif\Phpnotif;
-use MongoDB\BSON\UTCDateTime;
+use MongoDB\Driver\Exception\Exception;
 use PHPUnit\Framework\TestCase;
 
 class PhpNotifTest extends TestCase
 {
     /**
      * @test
+     * @throws Exception
      */
     public function send_notification_to_inbox()
     {
-        $faker = Factory::create();
-
         // Given
         $phpNotif = new Phpnotif();
-        $entity = new PhpNotifEntity();
-        $entity->id = $faker->randomNumber();
-        $entity->title = $faker->text(50);
-        $entity->content_long = $faker->realText();
-        $entity->created_at = (new UTCDateTime(time() * 1000));
-        $entity->created_at_unixtimestamp = time();
-        $entity->user_id = $faker->randomNumber();
+        $entity = Test::createEntity();
 
         // When
         $result = $phpNotif->save($entity);
@@ -38,21 +32,13 @@ class PhpNotifTest extends TestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function get_inbox_by_user_id()
     {
         // Given
-        $faker = Factory::create();
-
-        // Given
         $phpNotif = new Phpnotif();
-        $entity = new PhpNotifEntity();
-        $entity->id = $faker->randomNumber();
-        $entity->title = $faker->text(50);
-        $entity->content_long = $faker->realText();
-        $entity->created_at = (new UTCDateTime(time() * 1000));
-        $entity->created_at_unixtimestamp = time();
-        $entity->user_id = $faker->randomNumber();
+        $entity = Test::createEntity();
 
         // When
         $phpNotif->save($entity);
@@ -65,14 +51,21 @@ class PhpNotifTest extends TestCase
 
     /**
      * @test
+     * @throws Exception
      */
     public function set_message_as_read()
     {
         // Given
+        $phpNotif = new Phpnotif();
+        $entity = Test::createEntity();
 
         // When
+        $phpNotif->save($entity);
+        $result = $phpNotif->setMessageAsRead($entity->user_id, $entity->id);
 
         // Then
+        self::assertTrue($result->success);
+        self::assertEquals(1, $result->data->nModified);
     }
 
 }
