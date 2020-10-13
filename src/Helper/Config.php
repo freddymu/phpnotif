@@ -43,17 +43,18 @@ class Config
     private static function getConfigFileContent(): array
     {
         if (function_exists('config_path')) {
-            $laravelConfigStructure = config_path('phpnotif.php');
 
-            if (file_exists($laravelConfigStructure)) {
-                return include $laravelConfigStructure;
+            $laravelConfig = config_path('phpnotif.php');
+
+            if (file_exists($laravelConfig)) {
+                return include $laravelConfig;
             }
         }
 
-        $defaultConfigFile = dirname(__DIR__) . '/../config/phpnotif.php';
+        $defaultConfig = dirname(__DIR__) . '/../config/phpnotif.php';
 
-        if (file_exists($defaultConfigFile)) {
-            return include $defaultConfigFile;
+        if (file_exists($defaultConfig)) {
+            return include $defaultConfig;
         }
 
         throw new ConfigException('Cannot found phpnotif.php configuration file.');
