@@ -27,13 +27,13 @@ class PhpNotif
 
         $rules = [
             'title' => 'required|max:256',
-            'content_short' => 'max:256',
-            'content_medium' => 'max:512',
-            'content_long' => 'max:1024',
+            'content_short' => 'nullable|max:256',
+            'content_medium' => 'nullable|max:512',
+            'content_long' => 'required|max:1024',
             'category_id' => 'integer',
             'group_id' => 'integer',
-            'thumbnail_url' => 'max:256',
-            'image_url' => 'max:256',
+            'thumbnail_url' => 'nullable|max:256',
+            'image_url' => 'nullable|max:256',
             'user_id' => 'required|integer',
             'reference_id' => 'nullable|integer'
         ];
