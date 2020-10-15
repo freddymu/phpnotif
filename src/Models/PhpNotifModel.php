@@ -57,6 +57,7 @@ class PhpNotifModel extends MongoDb
             'options' => [
                 'skip' => $offset,
                 'limit' => $defaultPerPage,
+                'sort' => ['_id' => -1] // sort by newest
                 // 'maxTimeMS' => 5000
             ]
         ]);
