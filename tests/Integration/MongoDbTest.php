@@ -101,13 +101,14 @@ class MongoDbTest extends BaseTestCase
         $mongoDb->openConnection();
 
         $mongoDb->create($collectionName, $data);
+        $insertedId = (string)$mongoDb->read($collectionName, ['filter' => []])[0]->_id;
+        $objectId = new \MongoDB\BSON\ObjectId($insertedId);
 
         $entity->title .= ' [EDITED]';
         $updatedData = $entity->toArray();
-        unset($updatedData->id);
 
         $result = $mongoDb->update($collectionName, [
-            'q' => ['id' => $entity->id],
+            'q' => ['_id' => $objectId],
             'u' => ['$set' => $updatedData]
         ]);
 

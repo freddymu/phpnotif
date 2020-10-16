@@ -61,7 +61,7 @@ class PhpNotif
      * @return GenericResponseEntity
      * @throws Exception
      */
-    final public function setMessageAsRead(int $userId, $messageId): GenericResponseEntity
+    final public function setMessageAsRead(int $userId, string $messageId): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 
