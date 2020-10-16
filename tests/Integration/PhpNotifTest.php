@@ -2,6 +2,7 @@
 
 namespace Freddymu\Phpnotif\Tests\Integration;
 
+use Freddymu\Phpnotif\Exceptions\ConfigException;
 use Freddymu\Phpnotif\Helper\Test;
 use Freddymu\Phpnotif\PhpNotif;
 use Freddymu\Phpnotif\Tests\BaseTestCase;
@@ -49,7 +50,7 @@ class PhpNotifTest extends BaseTestCase
 
     /**
      * @test
-     * @throws Exception
+     * @throws Exception|ConfigException
      */
     public function set_message_as_read()
     {
@@ -59,7 +60,8 @@ class PhpNotifTest extends BaseTestCase
 
         // When
         $phpNotif->save($entity);
-        $result = $phpNotif->setMessageAsRead($entity->user_id, $entity->id);
+        $message = $phpNotif->getInboxByUserId($entity->user_id)->data['data'][0];
+        $result = $phpNotif->setMessageAsRead($entity->user_id, (string)$message->_id);
 
         // Then
         self::assertTrue($result->success);

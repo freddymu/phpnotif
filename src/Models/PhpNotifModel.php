@@ -83,8 +83,10 @@ class PhpNotifModel extends MongoDb
             'read_at' => \Freddymu\Phpnotif\Helper\MongoDB::getUtcDate()
         ];
 
+        $objectId = new \MongoDB\BSON\ObjectId($messageId);
+
         $result = $this->update($this->collectionName, [
-            'q' => ['_id' => $messageId, 'user_id' => $userId],
+            'q' => ['_id' => $objectId, 'user_id' => $userId],
             'u' => ['$set' => $set]
         ]);
 
