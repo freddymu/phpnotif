@@ -9,9 +9,9 @@ namespace Freddymu\Phpnotif\Entities;
 class PhpNotifEntity
 {
     /**
-     * @var int
+     * @var string
      */
-    public $id;
+    public $_id;
 
     /**
      * @var string
@@ -107,6 +107,7 @@ class PhpNotifEntity
         $buffers = [];
 
         foreach ($props as $key => $value) {
+            if ($key === '_id') continue;
             $buffers[$key] = $value;
         }
 

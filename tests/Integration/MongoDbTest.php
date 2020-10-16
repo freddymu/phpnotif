@@ -132,10 +132,14 @@ class MongoDbTest extends BaseTestCase
         // When
         $mongoDb->openConnection();
         $mongoDb->create($collectionName, [$entity->toArray()]);
+        $insertedId = (string)$mongoDb->read($collectionName, ['filter' => []])[0]->_id;
+        $objectId = new \MongoDB\BSON\ObjectId($insertedId);
+
         $result = $mongoDb->delete($collectionName, [
-            'q' => ['id' => $entity->id],
+            'q' => ['_id' => $objectId],
             'limit' => 0
         ]);
+
         $mongoDb->closeConnection();
 
         // Then

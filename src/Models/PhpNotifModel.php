@@ -72,11 +72,11 @@ class PhpNotifModel extends MongoDb
 
     /**
      * @param int $userId
-     * @param $messageId
+     * @param string $messageId
      * @return mixed
      * @throws Exception
      */
-    public function setMessageAsRead(int $userId, $messageId)
+    public function setMessageAsRead(int $userId, string $messageId)
     {
         $set = [
             'is_read' => 1,
@@ -84,7 +84,7 @@ class PhpNotifModel extends MongoDb
         ];
 
         $result = $this->update($this->collectionName, [
-            'q' => ['id' => $messageId, 'user_id' => $userId],
+            'q' => ['_id' => $messageId, 'user_id' => $userId],
             'u' => ['$set' => $set]
         ]);
 
