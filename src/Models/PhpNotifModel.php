@@ -80,7 +80,8 @@ class PhpNotifModel extends MongoDb
     {
         $set = [
             'is_read' => 1,
-            'read_at' => \Freddymu\Phpnotif\Helper\MongoDB::getUtcDate()
+            'read_at' => \Freddymu\Phpnotif\Helper\MongoDB::getUtcDate(),
+            'read_at_unixtimestamp' => time()
         ];
 
         $objectId = new \MongoDB\BSON\ObjectId($messageId);
