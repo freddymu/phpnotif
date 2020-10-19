@@ -107,7 +107,10 @@ class PhpNotifEntity
         $buffers = [];
 
         foreach ($props as $key => $value) {
-            if ($key === '_id') continue;
+            if ($key === '_id') {
+                $buffers['id'] = (string)$props[$key];
+                continue;
+            }
             $buffers[$key] = $value;
         }
 

@@ -6,6 +6,7 @@ use Freddymu\Phpnotif\Entities\GenericResponseEntity;
 use Freddymu\Phpnotif\Entities\PhpNotifEntity;
 use Freddymu\Phpnotif\Helper\Validator;
 use Freddymu\Phpnotif\Models\PhpNotifModel;
+use Illuminate\Support\Carbon;
 use MongoDB\Driver\Exception\Exception;
 
 /**
@@ -87,6 +88,21 @@ class PhpNotif
 
         $model = new PhpNotifModel();
         $result = $model->getInboxByUserId($userId, $page);
+
+        // transform data
+        $transformedData = collect($result['data'])
+            ->map(function ($item) {
+                $readAt = Carbon::createFromTimestampMs($item->read_at)->setTimezone('7');
+                $createdAt = Carbon::createFromTimestampMs($item->created_at)->setTimezone('7');
+                $newElements = [
+                    'id' => (string)$item->_id,
+                    'created_at_formatted' => $item->created_at !== null ? $createdAt->format('Y-m-d H:i:s') : null,
+                    'read_at_formatted' => $item->read_at !== null ? $readAt->format('Y-m-d H:i:s') : null,
+                ];
+                return array_merge((array)$item, $newElements);
+            });
+
+        $result['data'] = $transformedData;
 
         $response->success = !empty($result);
         $response->message = 'Found ' . $result['total_data'] . ' data(s).';
