@@ -92,8 +92,8 @@ class PhpNotif
         // transform data
         $transformedData = collect($result['data'])
             ->map(function ($item) {
-                $readAt = Carbon::createFromTimestampMs($item->read_at)->setTimezone('7');
-                $createdAt = Carbon::createFromTimestampMs($item->created_at)->setTimezone('7');
+                $readAt = Carbon::createFromTimestampMs((string)$item->read_at, '7');
+                $createdAt = Carbon::createFromTimestampMs((string)$item->created_at, '7');
                 $newElements = [
                     'id' => (string)$item->_id,
                     'created_at_formatted' => $item->created_at !== null ? $createdAt->format('Y-m-d H:i:s') : null,
