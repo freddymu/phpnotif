@@ -101,14 +101,13 @@ class PhpNotifEntity
     /**
      * @return array
      */
-    final public function toArray() : array
+    final public function toArray(): array
     {
         $props = get_object_vars($this);
         $buffers = [];
 
         foreach ($props as $key => $value) {
             if ($key === '_id') {
-                $buffers['id'] = (string)$props[$key];
                 continue;
             }
             $buffers[$key] = $value;
