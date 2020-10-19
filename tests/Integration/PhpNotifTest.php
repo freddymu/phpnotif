@@ -61,7 +61,7 @@ class PhpNotifTest extends BaseTestCase
         // When
         $phpNotif->save($entity);
         $message = $phpNotif->getInboxByUserId($entity->user_id)->data['data'][0];
-        $result = $phpNotif->setMessageAsRead($entity->user_id, (string)$message->_id);
+        $result = $phpNotif->setMessageAsRead($entity->user_id, $message['id']);
 
         // Then
         self::assertTrue($result->success);
