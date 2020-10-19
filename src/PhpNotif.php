@@ -92,12 +92,16 @@ class PhpNotif
         // transform data
         $transformedData = collect($result['data'])
             ->map(function ($item) {
-                $readAt = Carbon::createFromTimestampMs((string)$item->read_at, '7');
-                $createdAt = Carbon::createFromTimestampMs((string)$item->created_at, '7');
+                $readAt = $item->read_at !== null
+                    ? Carbon::createFromTimestampMs((string)$item->read_at, '7')->format('Y-m-d H:i:s')
+                    : null;
+                $createdAt = $item->created_at !== null
+                    ? Carbon::createFromTimestampMs((string)$item->created_at, '7')->format('Y-m-d H:i:s')
+                    : null;
                 $newElements = [
                     'id' => (string)$item->_id,
-                    'created_at_formatted' => $item->created_at !== null ? $createdAt->format('Y-m-d H:i:s') : null,
-                    'read_at_formatted' => $item->read_at !== null ? $readAt->format('Y-m-d H:i:s') : null,
+                    'created_at_formatted' => $createdAt,
+                    'read_at_formatted' => $readAt
                 ];
                 return array_merge((array)$item, $newElements);
             });
