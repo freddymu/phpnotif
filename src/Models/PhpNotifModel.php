@@ -54,7 +54,7 @@ class PhpNotifModel extends MongoDb
 
         $filter = ['user_id' => $userId];
 
-        if ($groupId !== null) {
+        if ($groupId !== null && $groupId === 0) {
             $filter['group_id'] = $groupId;
         }
 
@@ -98,6 +98,23 @@ class PhpNotifModel extends MongoDb
         ]);
 
         return $result[0];
+    }
+
+    /**
+     * @param int $userId
+     * @return int[]
+     * @throws Exception
+     */
+    public function getInboxSummary(int $userId) : array
+    {
+        $totalUnread = $this->count($this->collectionName, ['user_id' => $userId, 'is_read' => 0])[0]->n ?? 0;
+        $totalRead = $this->count($this->collectionName, ['user_id' => $userId, 'is_read' => 1])[0]->n ?? 0;
+
+        return [
+            'unread' => $totalUnread,
+            'read' => $totalRead,
+            'total' => $totalUnread + $totalRead
+        ];
     }
 
     /**

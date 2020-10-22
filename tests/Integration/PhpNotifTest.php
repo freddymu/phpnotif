@@ -91,4 +91,22 @@ class PhpNotifTest extends BaseTestCase
         self::assertEquals(1, $result->data->nModified);
     }
 
+    /**
+     * @test
+     */
+    public function get_inbox_summary()
+    {
+        // Given
+        $phpNotif = new PhpNotif();
+        $entity = Test::createEntity();
+
+        // When
+        $phpNotif->save($entity);
+        $result = $phpNotif->getInboxSummary($entity->user_id);
+
+        // Then
+        self::assertTrue($result->success);
+        self::assertGreaterThanOrEqual(1, $result->data['unread']);
+        self::assertGreaterThanOrEqual(1, $result->data['total']);
+    }
 }

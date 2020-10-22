@@ -114,4 +114,21 @@ class PhpNotif
 
         return $response;
     }
+
+    /**
+     * @param int $userId
+     * @return GenericResponseEntity
+     * @throws Exception
+     */
+    final public function getInboxSummary(int $userId) : GenericResponseEntity
+    {
+        $response = new GenericResponseEntity();
+
+        $model = new PhpNotifModel();
+        $response->success = true;
+        $response->message = 'Inbox Stats';
+        $response->data = $model->getInboxSummary($userId);
+
+        return $response;
+    }
 }
