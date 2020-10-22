@@ -50,13 +50,13 @@ class PhpNotifModel extends MongoDb
         $defaultPerPage = (int)Config::get('pagination.per_page');
         $offset = ($page - 1) * $defaultPerPage;
 
-        $totalData = $this->count($this->collectionName, ['user_id' => $userId])[0]->n ?? 0;
-
         $filter = ['user_id' => $userId];
 
         if ($groupId !== null && $groupId !== 0) {
             $filter['group_id'] = $groupId;
         }
+
+        $totalData = $this->count($this->collectionName, $filter)[0]->n ?? 0;
 
         $foundData = $this->read($this->collectionName, [
             'filter' => $filter,
