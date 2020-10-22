@@ -19,17 +19,17 @@ class PhpNotifEntity
     public $title;
 
     /**
-     * @var null
+     * @var string|null
      */
     public $content_short = null;
 
     /**
-     * @var null
+     * @var string|null
      */
     public $content_medium = null;
 
     /**
-     * @var
+     * @var string
      */
     public $content_long;
 
@@ -44,12 +44,12 @@ class PhpNotifEntity
     public $group_id = 0;
 
     /**
-     * @var null
+     * @var string|null
      */
     public $thumbnail_url = null;
 
     /**
-     * @var null
+     * @var string|null
      */
     public $image_url = null;
 
@@ -59,7 +59,7 @@ class PhpNotifEntity
     public $created_at;
 
     /**
-     * @var
+     * @var int
      */
     public $created_at_unixtimestamp;
 
@@ -69,34 +69,39 @@ class PhpNotifEntity
     public $is_read = 0;
 
     /**
-     * @var null
+     * @var
      */
     public $read_at = null;
 
     /**
-     * @var null
+     * @var int|null
      */
     public $read_at_unixtimestamp = null;
 
     /**
-     * @var null
+     * @var string|null
      */
     public $reference_name = null;
 
     /**
-     * @var null
+     * @var int|null
      */
     public $reference_id = null;
 
     /**
-     * @var null
+     * @var string|null
      */
     public $reference_page = null;
 
     /**
-     * @var
+     * @var int
      */
     public $user_id;
+
+    /**
+     * @var array
+     */
+    public $options = [];
 
     /**
      * @return array
