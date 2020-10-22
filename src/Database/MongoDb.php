@@ -67,7 +67,8 @@ class MongoDb implements DatabaseInterface
      */
     public function openConnection()
     {
-        $this->connection = new Manager("mongodb://{$this->username}:{$this->password}@{$this->host}:{$this->port}/{$this->adminDatabase}");
+        $credential = (empty($this->username) || empty($this->password)) ? '' : "{$this->username}:{$this->password}@";
+        $this->connection = new Manager("mongodb://{$credential}{$this->host}:{$this->port}/{$this->adminDatabase}");
         return $this;
     }
 

@@ -28,7 +28,7 @@ class ConfigTest extends BaseTestCase
     public function read_a_sub_key_from_config_file()
     {
         // Given
-        $configContent = Config::get('connection.mongodb.username');
+        $configContent = Config::get('connection.mongodb.database');
 
         // When
 
