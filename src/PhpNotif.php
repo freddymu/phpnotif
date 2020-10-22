@@ -82,12 +82,12 @@ class PhpNotif
      * @throws Exception
      * @throws Exceptions\ConfigException
      */
-    final public function getInboxByUserId(int $userId, int $page = 1): GenericResponseEntity
+    final public function getInboxByUserId(int $userId, int $page = 1, int $groupId = null): GenericResponseEntity
     {
         $response = new GenericResponseEntity();
 
         $model = new PhpNotifModel();
-        $result = $model->getInboxByUserId($userId, $page);
+        $result = $model->getInboxByUserId($userId, $page, $groupId);
 
         // transform data
         $transformedData = collect($result['data'])

@@ -45,15 +45,21 @@ class PhpNotifModel extends MongoDb
      * @throws Exception
      * @throws ConfigException
      */
-    public function getInboxByUserId(int $userId, int $page = 1)
+    public function getInboxByUserId(int $userId, int $page = 1, int $groupId = null)
     {
         $defaultPerPage = (int)Config::get('pagination.per_page');
         $offset = ($page - 1) * $defaultPerPage;
 
         $totalData = $this->count($this->collectionName, ['user_id' => $userId])[0]->n ?? 0;
 
+        $filter = ['user_id' => $userId];
+
+        if ($groupId !== null) {
+            $filter['group_id'] = $groupId;
+        }
+
         $foundData = $this->read($this->collectionName, [
-            'filter' => ['user_id' => $userId],
+            'filter' => $filter,
             'options' => [
                 'skip' => $offset,
                 'limit' => $defaultPerPage,

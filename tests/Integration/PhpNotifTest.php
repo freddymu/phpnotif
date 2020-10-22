@@ -50,6 +50,29 @@ class PhpNotifTest extends BaseTestCase
 
     /**
      * @test
+     * @throws ConfigException
+     * @throws Exception
+     */
+    public function get_inbox_by_user_id_and_group_id()
+    {
+        // Given
+        $groupId = 0;
+        $page = 1;
+        $phpNotif = new PhpNotif();
+        $entity = Test::createEntity();
+
+        // When
+        $phpNotif->save($entity);
+
+        $result = $phpNotif->getInboxByUserId($entity->user_id, $page, $groupId);
+
+        // Then
+        self::assertTrue($result->success);
+        self::assertGreaterThanOrEqual(1, $result->data['total_data']);
+    }
+
+    /**
+     * @test
      * @throws Exception|ConfigException
      */
     public function set_message_as_read()
