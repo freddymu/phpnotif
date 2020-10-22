@@ -54,7 +54,7 @@ class PhpNotifModel extends MongoDb
 
         $filter = ['user_id' => $userId];
 
-        if ($groupId !== null && $groupId === 0) {
+        if ($groupId !== null && $groupId !== 0) {
             $filter['group_id'] = $groupId;
         }
 
