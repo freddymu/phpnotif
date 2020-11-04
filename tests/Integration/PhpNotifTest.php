@@ -56,19 +56,20 @@ class PhpNotifTest extends BaseTestCase
     public function get_inbox_by_user_id_and_group_id()
     {
         // Given
-        $groupId = 0;
+        $groupId = 1;
         $page = 1;
         $phpNotif = new PhpNotif();
         $entity = Test::createEntity();
+        $entity->group_id = $groupId;
 
         // When
         $phpNotif->save($entity);
-
         $result = $phpNotif->getInboxByUserId($entity->user_id, $page, $groupId);
 
         // Then
         self::assertTrue($result->success);
         self::assertGreaterThanOrEqual(1, $result->data['total_data']);
+        self::assertEquals($groupId, $result->data['data'][0]['group_id']);
     }
 
     /**
