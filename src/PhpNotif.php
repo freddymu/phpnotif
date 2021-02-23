@@ -36,7 +36,7 @@ class PhpNotif
             'thumbnail_url' => 'nullable|max:256',
             'image_url' => 'nullable|max:256',
             'user_id' => 'required|integer',
-            'reference_id' => 'nullable|integer'
+            'reference_id' => 'nullable'
         ];
 
         $validator = Validator::make($data, $rules);
